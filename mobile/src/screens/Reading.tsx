@@ -380,12 +380,6 @@ const Reading = ({ route, navigation }: any) => {
               ) : null}
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              <IconButton 
-                icon="bulb-outline" 
-                color={theme.colors.textSecondary} 
-                onPress={() => navigation.navigate('SurahLessons', { surahNumber, surahName })} 
-                accessible={true} accessibilityLabel="Key Lessons" accessibilityRole="button" 
-              />
               <View style={[styles.miniBadge, { backgroundColor: theme.colors.background }]}>
                 <Text style={{ color: theme.colors.textSecondary, fontFamily: theme.typography.family.primaryMedium, fontSize: 12 }}>{visibleVerse}</Text>
               </View>

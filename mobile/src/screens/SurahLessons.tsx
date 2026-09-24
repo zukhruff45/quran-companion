@@ -52,20 +52,36 @@ const SurahLessons = ({ route, navigation }: any) => {
           </Text>
         </View>
 
-        <View style={{ flexDirection: 'row', backgroundColor: theme.colors.surface, borderRadius: 8, padding: 4, marginBottom: 24 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 24, gap: 12 }}>
           <TouchableOpacity 
-            style={{ flex: 1, paddingVertical: 8, alignItems: 'center', backgroundColor: activeTab === 'english' ? theme.colors.card : 'transparent', borderRadius: 6 }}
+            style={{ 
+              flex: 1, 
+              paddingVertical: 12, 
+              alignItems: 'center', 
+              backgroundColor: activeTab === 'english' ? theme.colors.primary : theme.colors.surface, 
+              borderRadius: 12,
+              borderWidth: 1,
+              borderColor: activeTab === 'english' ? theme.colors.primary : theme.colors.border
+            }}
             onPress={() => setActiveTab('english')}
             accessibilityRole="button"
           >
-            <Text style={{ fontFamily: theme.typography.family.primaryMedium, color: activeTab === 'english' ? theme.colors.text : theme.colors.textSecondary }}>English</Text>
+            <Text style={{ fontFamily: theme.typography.family.primaryBold, color: activeTab === 'english' ? '#FFF' : theme.colors.text }}>English</Text>
           </TouchableOpacity>
           <TouchableOpacity 
-            style={{ flex: 1, paddingVertical: 8, alignItems: 'center', backgroundColor: activeTab === 'urdu' ? theme.colors.card : 'transparent', borderRadius: 6 }}
+            style={{ 
+              flex: 1, 
+              paddingVertical: 12, 
+              alignItems: 'center', 
+              backgroundColor: activeTab === 'urdu' ? theme.colors.primary : theme.colors.surface, 
+              borderRadius: 12,
+              borderWidth: 1,
+              borderColor: activeTab === 'urdu' ? theme.colors.primary : theme.colors.border
+            }}
             onPress={() => setActiveTab('urdu')}
             accessibilityRole="button"
           >
-            <Text style={{ fontFamily: theme.typography.family.primaryMedium, color: activeTab === 'urdu' ? theme.colors.text : theme.colors.textSecondary }}>اردو</Text>
+            <Text style={{ fontFamily: 'NotoNastaliqUrdu', fontSize: 16, color: activeTab === 'urdu' ? '#FFF' : theme.colors.text }}>اردو</Text>
           </TouchableOpacity>
         </View>
 

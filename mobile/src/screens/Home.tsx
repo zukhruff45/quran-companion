@@ -178,8 +178,8 @@ const Home = ({ navigation }: any) => {
       <View style={{ padding: theme.spacing.xl }}>
         {/* Quick Access Row */}
         <Animated.View entering={FadeInDown.delay(50).duration(300)} style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: theme.spacing.xl }}>
-          <QuickAccessButton icon="book" label="Quran" onPress={() => navigation.navigate('Quran')} theme={theme} />
-          <QuickAccessButton icon="bookmark" label="Bookmarks" onPress={() => navigation.navigate('Bookmarks')} theme={theme} />
+          <QuickAccessButton icon="bulb" label="Key Lessons" onPress={() => navigation.navigate('LessonsList')} theme={theme} />
+          <QuickAccessButton icon="time" label="History" onPress={() => navigation.navigate('Profile', { screen: 'History' })} theme={theme} />
           <QuickAccessButton icon="search" label="Search" onPress={() => navigation.navigate('Search')} theme={theme} />
           <QuickAccessButton icon="settings" label="Settings" onPress={() => navigation.navigate('Profile')} theme={theme} />
         </Animated.View>
@@ -242,9 +242,11 @@ const Home = ({ navigation }: any) => {
           <Card style={{ marginBottom: theme.spacing.xxxl, borderWidth: 1, borderColor: theme.colors.border }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: theme.spacing.lg }}>
               <Text style={{ color: theme.colors.textSecondary, fontFamily: theme.typography.family.primaryBold, fontSize: theme.typography.size.h3 }}>Daily Verse</Text>
-              <Pressable onPress={() => navigation.navigate('DailyVerse')}>
-                <Text style={{ color: theme.colors.primary, fontFamily: theme.typography.family.primaryMedium }}>View Full</Text>
-              </Pressable>
+              {dailyVerse && (
+                <Pressable onPress={() => navigation.navigate('Quran', { screen: 'Reading', params: { surahNumber: dailyVerse.surah, scrollToVerse: dailyVerse.verse } })}>
+                  <Text style={{ color: theme.colors.primary, fontFamily: theme.typography.family.primaryMedium, padding: 4 }}>View Full</Text>
+                </Pressable>
+              )}
             </View>
             
             {dailyVerse && (

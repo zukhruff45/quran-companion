@@ -6,6 +6,7 @@ import { ThemeContext } from '../context/ThemeContext';
 
 import Home from '../screens/Home';
 import DailyVerse from '../screens/DailyVerse';
+import LessonsList from '../screens/LessonsList';
 import QuranList from '../screens/QuranList';
 import Reading from '../screens/Reading';
 import Search from '../screens/Search';
@@ -23,6 +24,8 @@ const HomeStack = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="HomeScreen" component={Home} />
       <Stack.Screen name="DailyVerse" component={DailyVerse} />
+      <Stack.Screen name="LessonsList" component={LessonsList} />
+      <Stack.Screen name="SurahLessons" component={SurahLessons} />
     </Stack.Navigator>
   );
 };
