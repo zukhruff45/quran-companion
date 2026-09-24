@@ -1,13 +1,30 @@
-import React, { useContext } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ThemeContext } from '../context/ThemeContext';
-import { quranMeta } from '../api/quran';
+import { fetchSurahs } from '../api/quran';
 import IconButton from '../components/ui/IconButton';
 
 const LessonsList = ({ navigation }: any) => {
   const { theme } = useContext(ThemeContext);
   const insets = useSafeAreaInsets();
+  const [surahs, setSurahs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadSurahs();
+  }, []);
+
+  const loadSurahs = async () => {
+    try {
+      const data = await fetchSurahs();
+      setSurahs(data);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
@@ -16,37 +33,43 @@ const LessonsList = ({ navigation }: any) => {
         <Text style={{ color: theme.colors.text, fontFamily: theme.typography.family.primaryBold, fontSize: 18, marginLeft: 16 }}>Key Lessons</Text>
       </View>
 
-      <FlatList
-        data={quranMeta}
-        keyExtractor={(item) => item.number.toString()}
-        contentContainerStyle={{ padding: 16 }}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              backgroundColor: theme.colors.surface,
-              padding: 16,
-              marginBottom: 12,
-              borderRadius: 12,
-              ...theme.shadows.small
-            }}
-            onPress={() => navigation.navigate('SurahLessons', { surahNumber: item.number, surahName: item.englishName })}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <View style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: 'rgba(32, 178, 137, 0.1)', justifyContent: 'center', alignItems: 'center', marginRight: 16 }}>
-                <Text style={{ color: theme.colors.primary, fontFamily: theme.typography.family.primaryBold }}>{item.number}</Text>
+      {loading ? (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size="large" color={theme.colors.primary} />
+        </View>
+      ) : (
+        <FlatList
+          data={surahs}
+          keyExtractor={(item) => item.number.toString()}
+          contentContainerStyle={{ padding: 16 }}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                backgroundColor: theme.colors.surface,
+                padding: 16,
+                marginBottom: 12,
+                borderRadius: 12,
+                ...theme.shadows.small
+              }}
+              onPress={() => navigation.navigate('SurahLessons', { surahNumber: item.number, surahName: item.englishName })}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: 'rgba(32, 178, 137, 0.1)', justifyContent: 'center', alignItems: 'center', marginRight: 16 }}>
+                  <Text style={{ color: theme.colors.primary, fontFamily: theme.typography.family.primaryBold }}>{item.number}</Text>
+                </View>
+                <View>
+                  <Text style={{ color: theme.colors.text, fontFamily: theme.typography.family.primaryBold, fontSize: 16 }}>{item.englishName}</Text>
+                  <Text style={{ color: theme.colors.textSecondary, fontFamily: theme.typography.family.primary, fontSize: 13 }}>{item.englishNameTranslation}</Text>
+                </View>
               </View>
-              <View>
-                <Text style={{ color: theme.colors.text, fontFamily: theme.typography.family.primaryBold, fontSize: 16 }}>{item.englishName}</Text>
-                <Text style={{ color: theme.colors.textSecondary, fontFamily: theme.typography.family.primary, fontSize: 13 }}>{item.englishNameTranslation}</Text>
-              </View>
-            </View>
-            <Text style={{ color: theme.colors.primary, fontFamily: theme.typography.family.quran, fontSize: 20 }}>{item.name}</Text>
-          </TouchableOpacity>
-        )}
-      />
+              <Text style={{ color: theme.colors.primary, fontFamily: theme.typography.family.quran, fontSize: 20 }}>{item.name}</Text>
+            </TouchableOpacity>
+          )}
+        />
+      )}
     </View>
   );
 };
