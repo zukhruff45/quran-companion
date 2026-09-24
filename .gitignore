@@ -151,3 +151,14 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
+
+# AI Assistants & Tooling
+.claude/
+.antigravity/
+CLAUDE.md
+AGENTS.md
+.cursor/
+.windsurf/
+*.log
+urdu_output.txt
+test_urdu.js
